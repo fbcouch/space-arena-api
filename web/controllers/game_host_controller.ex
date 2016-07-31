@@ -11,10 +11,11 @@ defmodule SpaceArena.GameHostController do
   defp token,
     do: :crypto.strong_rand_bytes(64) |> Base.encode64 |> binary_part(0, 64)
 
-  def create(%{remote_ip: remote_ip} = conn, %{"game_host" => game_host_params}) do
+  def create(%{req_headers: headers} = conn, %{"game_host" => game_host_params}) do
+    {_, forwarded_for} = Enum.find(headers, fn ({key, _}) -> key == "x-forwarded-for" end)
     game_host_params = game_host_params
       |> Dict.put("token", token)
-      |> Dict.put("ip", remote_ip |> Tuple.to_list |> Enum.join("."))
+      |> Dict.put("ip", forwarded_for)
     changeset = GameHost.changeset(%GameHost{}, game_host_params)
     IO.inspect(conn)
 
@@ -64,6 +65,7 @@ defmodule SpaceArena.GameHostController do
     do: send_forbidden(conn)
 
   def delete(conn, %{"id" => id, "token" => token}) do
+    IO.inspect(conn)
     game_host = Repo.get!(GameHost, id)
     if token == game_host.token do
       # Here we use delete! (with a bang) because we expect
