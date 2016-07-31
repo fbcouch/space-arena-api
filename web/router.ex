@@ -11,6 +11,8 @@ defmodule SpaceArena.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
+    resources "/game_hosts", SpaceArena.GameHostController
   end
 
   scope "/", SpaceArena do
