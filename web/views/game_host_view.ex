@@ -2,7 +2,7 @@ defmodule SpaceArena.GameHostView do
   use SpaceArena.Web, :view
 
   def render("index.json", %{game_hosts: game_hosts}) do
-    render_many(game_hosts, SpaceArena.GameHostView, "game_host.json")
+    %{data: render_many(game_hosts, SpaceArena.GameHostView, "game_host.json")}
   end
 
   def render("show.json", %{game_host: game_host}) do
