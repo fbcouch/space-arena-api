@@ -10,7 +10,7 @@ defmodule SpaceArena.GameHostView do
   end
 
   def render("create.json", %{game_host: game_host}) do
-    render_one(game_host, SpaceArena.GameHostView, "game_host.json")
+    render_one(game_host, SpaceArena.GameHostView, "game_host_with_token.json")
   end
 
   def render("game_host.json", %{game_host: game_host}) do
