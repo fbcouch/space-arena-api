@@ -3,6 +3,14 @@ defmodule SpaceArena.GameHostController do
 
   alias SpaceArena.GameHost
 
+  def index(conn, %{"version" => version} = params) do
+    game_hosts = GameHost
+      |> GameHost.recent
+      |> GameHost.with_version(version)
+      |> Repo.all
+    render(conn, "index.json", game_hosts: game_hosts)
+  end
+
   def index(conn, _params) do
     game_hosts = GameHost
       |> GameHost.recent

@@ -26,4 +26,9 @@ defmodule SpaceArena.GameHost do
     from m in query,
       where: m.updated_at >= datetime_add(^Ecto.DateTime.utc, -5, "minute")
   end
+
+  def with_version(query, version) do
+    from m in query,
+      where: m.version == ^version
+  end
 end
