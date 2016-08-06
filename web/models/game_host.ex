@@ -21,4 +21,9 @@ defmodule SpaceArena.GameHost do
     |> cast(params, [:name, :ip, :port, :cur_players, :max_players, :version, :token])
     |> validate_required([:name, :ip, :port, :cur_players, :max_players, :version, :token])
   end
+
+  def recent(query) do
+    from m in query,
+      where: m.updated_at >= datetime_add(^Ecto.DateTime.utc, -5, "minute")
+  end
 end

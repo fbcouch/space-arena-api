@@ -4,7 +4,9 @@ defmodule SpaceArena.GameHostController do
   alias SpaceArena.GameHost
 
   def index(conn, _params) do
-    game_hosts = Repo.all(GameHost)
+    game_hosts = GameHost
+      |> GameHost.recent
+      |> Repo.all
     render(conn, "index.json", game_hosts: game_hosts)
   end
 
