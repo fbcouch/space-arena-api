@@ -24,7 +24,7 @@ defmodule SpaceArena.GameHost do
 
   def recent(query) do
     from m in query,
-      where: m.updated_at >= datetime_add(^Ecto.DateTime.utc, -5, "minute")
+      where: m.updated_at >= datetime_add(^Ecto.DateTime.utc, -1, "minute")
   end
 
   def with_version(query, version) do
